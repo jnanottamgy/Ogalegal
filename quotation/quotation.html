@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quotation — Ogha Legal — JTACS</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #0f1b2d;
+    --ink-2: #33405a;
+    --muted: #6a7385;
+    --line: #e4e0d6;
+    --paper: #ffffff;
+    --tint: #f7f5f0;
+    --gold: #b08d57;
+    --gold-soft: #f3ece0;
+    --green: #2f6b4f;
+    --green-soft: #e8f2ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9d6cf; }
+  body {
+    font-family: "Inter", "DejaVu Sans", sans-serif;
+    color: var(--ink);
+    font-size: 9.2pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-feature-settings: "tnum" 1, "cv11" 1;
+  }
+  .page {
+    width: 210mm; height: 297mm;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    margin: 0 auto;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .inner { padding: 0 15mm; }
+  h1, h2, h3, .display { font-family: "Inter Display", "Inter", sans-serif; }
+
+  /* ---------- Header band ---------- */
+  .band {
+    background: var(--ink);
+    color: #fff;
+    padding: 13mm 15mm 10mm;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    position: relative;
+  }
+  .band::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.4mm;
+    background: linear-gradient(90deg, var(--gold), #d9bf8f 60%, var(--gold));
+  }
+  .brand { display: flex; align-items: center; gap: 4mm; }
+  .mark {
+    width: 13mm; height: 13mm; border: 0.5mm solid var(--gold); border-radius: 2mm;
+    display: grid; place-items: center;
+    font-family: "Inter Display"; font-weight: 700; font-size: 17pt; color: var(--gold);
+  }
+  .wordmark { font-family: "Inter Display"; font-weight: 700; font-size: 22pt; letter-spacing: .2em; line-height: 1; }
+  .wordmark-sub { font-size: 7.5pt; letter-spacing: .28em; text-transform: uppercase; color: #c9cfdb; margin-top: 2mm; }
+  .doc-title { text-align: right; }
+  .doc-title .t { font-family: "Inter Display"; font-weight: 300; font-size: 25pt; letter-spacing: .14em; text-transform: uppercase; line-height: 1; }
+  .doc-title .meta { margin-top: 3mm; display: grid; grid-template-columns: auto auto; gap: .6mm 5mm; font-size: 8pt; color: #c9cfdb; justify-content: end; }
+  .doc-title .meta b { color: #fff; font-weight: 600; text-align: right; }
+
+  /* ---------- Parties ---------- */
+  .parties { display: grid; grid-template-columns: 1fr 1.5fr; gap: 6mm; margin: 7mm 0 6mm; }
+  .label { font-size: 7pt; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 1.2mm; }
+  .party-name { font-family: "Inter Display"; font-weight: 700; font-size: 15pt; letter-spacing: .01em; }
+  .party-sub { color: var(--muted); font-size: 8.4pt; }
+  .subject { font-size: 10pt; font-weight: 600; color: var(--ink-2); }
+
+  /* ---------- Section headings ---------- */
+  .sec { display: flex; align-items: baseline; gap: 3mm; margin: 0 0 3mm; }
+  .sec .num { font-family: "Inter Display"; font-size: 8pt; font-weight: 700; color: var(--gold); letter-spacing: .1em; }
+  .sec h2 { font-size: 12.5pt; font-weight: 700; letter-spacing: .005em; }
+  .sec .rule { flex: 1; height: 0.25mm; background: var(--line); transform: translateY(-1mm); }
+
+  /* ---------- Package cards ---------- */
+  .packages { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-bottom: 6mm; }
+  .pkg { border: 0.3mm solid var(--line); border-radius: 3mm; padding: 5mm 5.5mm 4.5mm; position: relative; background: var(--tint); }
+  .pkg.featured { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .pkg .tag { position: absolute; top: -2.6mm; right: 5mm; background: var(--gold); color: #fff; font-size: 6.8pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 1mm 2.6mm; border-radius: 1mm; }
+  .pkg .pname { font-size: 7.4pt; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--gold); }
+  .pkg .ptitle { font-family: "Inter Display"; font-size: 11.5pt; font-weight: 600; margin-top: 1mm; }
+  .pkg .price { font-family: "Inter Display"; font-size: 25pt; font-weight: 700; margin-top: 2.5mm; letter-spacing: -.01em; line-height: 1.05; }
+  .pkg .price small { font-size: 9pt; font-weight: 500; letter-spacing: 0; opacity: .75; margin-left: 1.5mm; }
+  .pkg .pnote { font-size: 7.8pt; color: var(--muted); margin-top: 1mm; }
+  .pkg.featured .pnote { color: #c9cfdb; }
+  .pkg ul { list-style: none; margin-top: 3mm; border-top: 0.25mm solid var(--line); padding-top: 2.6mm; }
+  .pkg.featured ul { border-top-color: #2c3a52; }
+  .pkg li { padding-left: 4.2mm; position: relative; margin: .8mm 0; font-size: 8.5pt; }
+  .pkg li::before { content: ""; position: absolute; left: 0; top: 1.55mm; width: 1.7mm; height: 1.7mm; border-radius: 50%; background: var(--gold); }
+
+  /* ---------- Line-item table ---------- */
+  table { width: 100%; border-collapse: collapse; }
+  .items th { font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; text-align: left; padding: 0 0 2mm; border-bottom: 0.4mm solid var(--ink); }
+  .items th.r, .items td.r { text-align: right; }
+  .items td { padding: 2.6mm 0; border-bottom: 0.25mm solid var(--line); vertical-align: top; }
+  .items td.idx { width: 8mm; color: var(--muted); font-weight: 600; }
+  .items td.type { width: 34mm; }
+  .items td.amt { width: 30mm; font-weight: 700; font-size: 10pt; }
+  .items .desc b { font-weight: 600; }
+  .items .desc .s { color: var(--muted); font-size: 8pt; margin-top: .5mm; }
+  .chip { white-space: nowrap; display: inline-block; font-size: 6.8pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .6mm 2mm; border-radius: 1mm; }
+  .chip.core { background: var(--ink); color: #fff; }
+  .chip.incl { background: var(--green-soft); color: var(--green); }
+  .chip.opt { background: var(--gold-soft); color: #8a6a37; }
+  .chip.free { background: #eef0f4; color: var(--ink-2); }
+  .totals { margin-top: 3mm; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .tot { display: flex; justify-content: space-between; align-items: center; padding: 3mm 4mm; border-radius: 2mm; background: var(--tint); border: 0.25mm solid var(--line); }
+  .tot.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .tot .k { font-size: 8pt; font-weight: 600; }
+  .tot .k span { display: block; font-weight: 400; font-size: 7.3pt; opacity: .7; }
+  .tot .v { font-family: "Inter Display"; font-size: 15pt; font-weight: 700; }
+  .taxnote { margin-top: 2.2mm; font-size: 7.8pt; color: var(--muted); display: flex; justify-content: space-between; }
+  .taxnote b { color: var(--green); font-weight: 700; }
+
+  /* ---------- Scope columns ---------- */
+  .scope { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .col { border-top: 0.8mm solid var(--ink); padding-top: 2.6mm; }
+  .col.g { border-top-color: var(--green); }
+  .col.o { border-top-color: var(--gold); }
+  .col h3 { font-size: 9.8pt; font-weight: 700; }
+  .col .h3s { font-size: 7.6pt; color: var(--muted); margin-bottom: 2mm; }
+  .col ul { list-style: none; }
+  .col li { font-size: 8.1pt; padding-left: 3.8mm; position: relative; margin: 1.05mm 0; line-height: 1.38; }
+  .col li::before { content: "✓"; position: absolute; left: 0; top: 0; font-size: 7.6pt; font-weight: 700; color: var(--ink); }
+  .col.g li::before { color: var(--green); }
+  .col.o li::before { color: var(--gold); }
+
+  .note { margin-top: 4.5mm; font-size: 7.7pt; color: var(--ink-2); background: var(--tint); border-left: 0.8mm solid var(--gold); padding: 2.4mm 3.5mm; border-radius: 0 1.5mm 1.5mm 0; }
+
+  /* ---------- Page header (pages 2-3) ---------- */
+  .mini { display: flex; justify-content: space-between; align-items: center; padding: 9mm 15mm 0; }
+  .mini .brand .mark { width: 8.5mm; height: 8.5mm; font-size: 11pt; border-width: .4mm; }
+  .mini .brand .mark { color: var(--gold); }
+  .mini .wm { font-family: "Inter Display"; font-weight: 700; letter-spacing: .2em; font-size: 12pt; }
+  .mini .ref { font-size: 7.6pt; color: var(--muted); text-align: right; }
+  .mini-rule { margin: 4mm 15mm 7mm; height: .3mm; background: var(--line); }
+
+  /* ---------- Email table ---------- */
+  .lead { font-size: 9pt; color: var(--ink-2); margin: -1mm 0 4mm; }
+  .lead b { color: var(--green); }
+  .email th { font-size: 6.8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; text-align: right; padding: 0 2mm 2mm; border-bottom: 0.4mm solid var(--ink); vertical-align: bottom; line-height: 1.3; }
+  .email th:first-child, .email th:nth-child(2) { text-align: left; }
+  .email th:first-child { padding-left: 0; }
+  .email th.hl { color: var(--ink); }
+  .email td { padding: 1.7mm 2mm; border-bottom: 0.25mm solid var(--line); text-align: right; font-size: 8.4pt; white-space: nowrap; }
+  .email td:first-child { text-align: left; padding-left: 0; font-weight: 600; }
+  .email td:nth-child(2) { text-align: left; color: var(--muted); }
+  .email td.hl { background: var(--gold-soft); font-weight: 700; color: var(--ink); }
+  .email td.yr { font-weight: 600; }
+  .email tr.grp td { background: var(--ink); color: #fff; text-align: left; padding: 2mm 3mm; border-bottom: none; white-space: normal; }
+  .email tr.grp td .gname { font-family: "Inter Display"; font-weight: 700; font-size: 9.4pt; }
+  .email tr.grp td .gsub { font-size: 7.6pt; color: #c9cfdb; margin-left: 2mm; font-weight: 400; }
+  .email tr.feat td { text-align: left; white-space: normal; color: var(--muted); font-size: 7.6pt; font-weight: 400; background: var(--tint); padding: 1.6mm 3mm; }
+  .email tr.feat td b { color: var(--ink-2); font-weight: 600; }
+  .email tr.spacer td { border: none; padding: 1.4mm 0; }
+  .email .muted-row td:first-child { font-weight: 500; color: var(--ink-2); }
+  .footnote { font-size: 7.3pt; color: var(--muted); margin-top: 2.6mm; line-height: 1.45; }
+
+  .suggest { margin-top: 5mm; display: grid; grid-template-columns: 26mm 1fr; border: 0.3mm solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+  .suggest .k { background: var(--green); color: #fff; display: grid; place-items: center; text-align: center; font-size: 7.2pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 3mm; }
+  .suggest .v { padding: 3mm 4mm; font-size: 8.4pt; color: var(--ink-2); }
+  .suggest .v b { color: var(--ink); }
+
+  /* ---------- How it works ---------- */
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 1mm; }
+  .step { position: relative; padding: 0 3.5mm 0 0; }
+  .step .dot { width: 8mm; height: 8mm; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: "Inter Display"; font-weight: 700; font-size: 9pt; position: relative; z-index: 2; }
+  .step.last .dot { background: var(--green); }
+  .step::before { content: ""; position: absolute; top: 4mm; left: 8mm; right: 0; height: .4mm; background: var(--line); z-index: 1; }
+  .step.last::before { display: none; }
+  .step h4 { font-family: "Inter Display"; font-size: 9pt; font-weight: 700; margin-top: 2.4mm; }
+  .step .who { font-size: 6.8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-top: .4mm; }
+  .step p { font-size: 7.9pt; color: var(--ink-2); margin-top: 1.2mm; line-height: 1.4; }
+  .bills { margin-top: 4mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+  .bill { background: var(--tint); border: 0.25mm solid var(--line); border-radius: 2mm; padding: 2.6mm 3.4mm; }
+  .bill .bk { font-size: 6.8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .bill .bv { font-size: 8.4pt; font-weight: 600; margin-top: .6mm; }
+  .bill .bs { font-size: 7.4pt; color: var(--muted); }
+
+  /* ---------- Timeline ---------- */
+  .tl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.6mm; }
+  .ms .bar { height: 2mm; border-radius: 1mm; background: var(--ink); }
+  .ms .bar.b2 { background: var(--green); }
+  .ms .bar.b3 { background: #7fb39a; }
+  .ms .bar.b4 { background: var(--gold); }
+  .ms .when { font-size: 6.8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 2.2mm; }
+  .ms h4 { font-family: "Inter Display"; font-size: 9pt; font-weight: 700; margin-top: .4mm; }
+  .ms p { font-size: 7.6pt; color: var(--ink-2); margin-top: .6mm; line-height: 1.35; }
+  .ms .pay { display: inline-block; margin-top: 1.6mm; font-size: 6.8pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--green-soft); color: var(--green); padding: .6mm 1.8mm; border-radius: 1mm; white-space: nowrap; }
+  .ms .pay.gold { background: var(--gold-soft); color: #8a6a37; }
+
+  /* ---------- Terms ---------- */
+  .terms { counter-reset: t; columns: 2; column-gap: 8mm; }
+  .terms li { break-inside: avoid; list-style: none; counter-increment: t; position: relative; padding-left: 6.5mm; margin: 0 0 2.4mm; font-size: 8.3pt; color: var(--ink-2); line-height: 1.45; }
+  .terms li::before { content: counter(t, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: "Inter Display"; font-weight: 700; font-size: 7.6pt; color: var(--gold); }
+  .terms li b { color: var(--ink); font-weight: 600; }
+
+  .accept { margin-top: 6mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .sig { border: 0.3mm solid var(--line); border-radius: 2.5mm; padding: 4mm 5mm 4.5mm; }
+  .sig .sk { font-size: 7pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+  .sig .sn { font-family: "Inter Display"; font-weight: 700; font-size: 11pt; margin-top: .6mm; }
+  .sig .lines { margin-top: 12mm; display: grid; gap: 7mm; }
+  .sig .ln { border-top: 0.3mm solid #b9b4a8; padding-top: 1mm; font-size: 7.4pt; color: var(--muted); }
+  .choice { margin-top: 3.2mm; display: flex; gap: 5mm; font-size: 8.2pt; }
+  .box { display: inline-block; width: 3.2mm; height: 3.2mm; border: 0.3mm solid var(--ink); border-radius: .6mm; vertical-align: -0.5mm; margin-right: 1.4mm; }
+
+  .thanks { margin-top: 7mm; text-align: center; }
+  .thanks .tt { font-family: "Inter Display"; font-size: 13pt; font-weight: 600; }
+  .thanks .ts { font-size: 8.2pt; color: var(--muted); margin-top: 1mm; }
+
+  /* ---------- Footer ---------- */
+  .foot { position: absolute; left: 15mm; right: 15mm; bottom: 8mm; display: flex; justify-content: space-between; font-size: 7pt; color: var(--muted); border-top: 0.25mm solid var(--line); padding-top: 2mm; letter-spacing: .02em; }
+  .foot b { color: var(--ink); letter-spacing: .18em; }
+</style>
+</head>
+<body>
+
+<!-- =========================== PAGE 1 =========================== -->
+<section class="page">
+  <header class="band">
+    <div class="brand">
+      <div class="mark">J</div>
+      <div>
+        <div class="wordmark">JTACS</div>
+        <div class="wordmark-sub">Website · SEO · Business Email</div>
+      </div>
+    </div>
+    <div class="doc-title">
+      <div class="t">Quotation</div>
+      <div class="meta">
+        <span>Quote No.</span><b>JTACS/Q/2026-27/001</b>
+        <span>Date</span><b>09 October 2026</b>
+        <span>Valid till</span><b>08 November 2026</b>
+      </div>
+    </div>
+  </header>
+
+  <div class="inner">
+    <div class="parties">
+      <div>
+        <div class="label">Prepared for</div>
+        <div class="party-name">Ogha Legal</div>
+        <div class="party-sub">Law firm website project</div>
+      </div>
+      <div>
+        <div class="label">Subject</div>
+        <div class="subject">Website design &amp; development, search engine optimisation (SEO) and business email on the firm's own domain</div>
+      </div>
+    </div>
+
+    <div class="sec"><span class="num">01</span><h2>Investment summary</h2><span class="rule"></span></div>
+    <div class="packages">
+      <div class="pkg">
+        <div class="pname">Package A · Essential</div>
+        <div class="ptitle">Website + 2 weeks Standard SEO</div>
+        <div class="price">₹18,000<small>one-time</small></div>
+        <div class="pnote">Inclusive of all taxes</div>
+        <ul>
+          <li>Professional law-firm website, up to 6 pages</li>
+          <li>2 weeks of Standard SEO — included</li>
+          <li>Business email setup at no charge</li>
+        </ul>
+      </div>
+      <div class="pkg featured">
+        <span class="tag">Recommended</span>
+        <div class="pname">Package B · Growth</div>
+        <div class="ptitle">Website + 8 weeks SEO</div>
+        <div class="price">₹26,000<small>one-time</small></div>
+        <div class="pnote">₹18,000 + ₹8,000 SEO add-on · Inclusive of all taxes</div>
+        <ul>
+          <li>Everything in Package A</li>
+          <li>+ 6 more weeks of Full Professional SEO</li>
+          <li>8 weeks of SEO in total (2 Standard + 6 Professional)</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="items">
+      <thead>
+        <tr><th>#</th><th>Description</th><th>Type</th><th class="r">Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="idx">1</td>
+          <td class="desc"><b>Website design &amp; development — general website</b><div class="s">Custom, mobile-friendly design · up to 6 pages · BCI-compliant disclaimer · enquiry form · SSL</div></td>
+          <td class="type"><span class="chip core">Core</span></td>
+          <td class="amt r">₹18,000</td>
+        </tr>
+        <tr>
+          <td class="idx">1a</td>
+          <td class="desc"><b>Standard SEO — 2 weeks</b><div class="s">On-page SEO, Google Search Console &amp; Analytics, Google Business Profile</div></td>
+          <td class="type"><span class="chip incl">Included</span></td>
+          <td class="amt r">Included</td>
+        </tr>
+        <tr>
+          <td class="idx">2</td>
+          <td class="desc"><b>Full Professional SEO — additional 6 weeks</b><div class="s">Keyword research, technical SEO, local SEO, content &amp; weekly reporting</div></td>
+          <td class="type"><span class="chip opt">Optional add-on</span></td>
+          <td class="amt r">₹8,000</td>
+        </tr>
+        <tr>
+          <td class="idx">3</td>
+          <td class="desc"><b>Business email IDs on your domain — setup &amp; configuration</b><div class="s">No charge by JTACS. Mailbox subscription paid directly to the provider at MRP — see page 3</div></td>
+          <td class="type"><span class="chip free">No charge</span></td>
+          <td class="amt r">Nil</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="totals">
+      <div class="tot"><div class="k">Total — Package A<span>Rupees Eighteen Thousand only</span></div><div class="v">₹18,000</div></div>
+      <div class="tot dark"><div class="k">Total — Package B<span>Rupees Twenty-Six Thousand only</span></div><div class="v">₹26,000</div></div>
+    </div>
+    <div class="taxnote"><span>All JTACS amounts are final — <b>inclusive of all taxes</b>. No hidden charges.</span><span>Domain, hosting &amp; email subscriptions: at actuals, paid to provider</span></div>
+  </div>
+
+  <footer class="foot"><span><b>JTACS</b> &nbsp;·&nbsp; Quotation for Ogha Legal</span><span>JTACS/Q/2026-27/001 &nbsp;·&nbsp; Page 1 of 4</span></footer>
+</section>
+
+<!-- =========================== PAGE 2 · scope, timeline, terms =========================== -->
+<section class="page">
+  <div class="mini">
+    <div class="brand"><div class="mark">J</div><div class="wm">JTACS</div></div>
+    <div class="ref">Quotation JTACS/Q/2026-27/001<br>Ogha Legal · 09 October 2026</div>
+  </div>
+  <div class="mini-rule"></div>
+
+  <div class="inner">
+    <div class="sec"><span class="num">02</span><h2>Scope of work</h2><span class="rule"></span></div>
+    <div class="scope">
+      <div class="col">
+        <h3>Website — General</h3>
+        <div class="h3s">₹18,000 · core</div>
+        <ul>
+          <li>Custom design in the firm's branding; mobile, tablet &amp; desktop ready</li>
+          <li>Up to 6 pages — Home, About the Firm, Practice Areas, Our Team, Insights, Contact</li>
+          <li>Bar Council of India disclaimer (Rule 36) shown on entry</li>
+          <li>Enquiry form with email alerts, click-to-call, WhatsApp &amp; Google Map</li>
+          <li>SSL (https), speed optimisation &amp; basic security</li>
+          <li>2 rounds of design revisions, handover &amp; 30 days post-launch support</li>
+        </ul>
+      </div>
+      <div class="col g">
+        <h3>Standard SEO — 2 weeks</h3>
+        <div class="h3s">Included with the website</div>
+        <ul>
+          <li>Page titles, meta descriptions, headings &amp; image alt-text on all pages</li>
+          <li>XML sitemap, robots.txt &amp; Google indexing request</li>
+          <li>Google Search Console + Google Analytics 4 setup</li>
+          <li>Google Business Profile (Maps listing) setup &amp; optimisation</li>
+          <li>Law-firm schema markup for richer search results</li>
+          <li>Closing report with baseline traffic &amp; rankings</li>
+        </ul>
+      </div>
+      <div class="col o">
+        <h3>Full Professional SEO — +6 weeks</h3>
+        <div class="h3s">₹8,000 · optional add-on</div>
+        <ul>
+          <li>Keyword research &amp; competitor analysis for each practice area and city</li>
+          <li>Technical SEO audit &amp; fixes — speed, Core Web Vitals, crawl errors</li>
+          <li>Local SEO — weekly Google Business Profile posts + up to 15 legal &amp; local directory listings</li>
+          <li>Up to 3 SEO-optimised articles on topics approved by the firm</li>
+          <li>Internal linking &amp; on-page content improvements</li>
+          <li>Weekly progress updates + final ranking &amp; traffic report</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">All SEO work stays within Bar Council of India norms — informational content only, no solicitation. Search rankings depend on Google and cannot be guaranteed; results typically build over 3–6 months.</div>
+
+    <div class="sec" style="margin-top:7mm"><span class="num">03</span><h2>Timeline &amp; payment milestones</h2><span class="rule"></span></div>
+    <div class="tl">
+      <div class="ms"><div class="bar"></div><div class="when">Day 0</div><h4>Kick-off</h4><p>Content &amp; logo received</p><span class="pay">50% advance</span></div>
+      <div class="ms"><div class="bar"></div><div class="when">Week 1</div><h4>Design</h4><p>Home page design, up to 2 revision rounds</p></div>
+      <div class="ms"><div class="bar"></div><div class="when">Weeks 2–3</div><h4>Build</h4><p>All pages, forms, BCI disclaimer &amp; testing</p></div>
+      <div class="ms"><div class="bar b2"></div><div class="when">≈ Week 3</div><h4>Go-live</h4><p>Website launched on your domain</p><span class="pay">Balance 50%</span></div>
+      <div class="ms"><div class="bar b3"></div><div class="when">Next 2 weeks</div><h4>Standard SEO</h4><p>Included in both packages</p></div>
+      <div class="ms"><div class="bar b4"></div><div class="when">Next 6 weeks</div><h4>Professional SEO</h4><p>Package B only</p><span class="pay gold">₹8,000 at start</span></div>
+    </div>
+
+    <div class="sec" style="margin-top:7mm"><span class="num">04</span><h2>Terms &amp; conditions</h2><span class="rule"></span></div>
+    <ol class="terms">
+      <li><b>Payment —</b> 50% advance to begin; balance 50% before the website goes live. The SEO add-on is payable at the start of the add-on period.</li>
+      <li><b>Timeline —</b> the website goes live in about 2–3 weeks from receipt of the advance and content (text, logo, photographs, team profiles).</li>
+      <li><b>Taxes —</b> all JTACS amounts in this quotation are final and inclusive of all taxes.</li>
+      <li><b>Third-party costs —</b> domain, hosting, email subscriptions and any premium plugins or stock images are paid by the firm directly to the provider at actuals. JTACS adds no margin.</li>
+      <li><b>Email pricing —</b> as published by Google, Microsoft and GoDaddy for India on 09 October 2026; the provider's invoice will prevail if prices change.</li>
+      <li><b>SEO —</b> carried out within Bar Council of India norms. Rankings depend on Google's algorithms and are not guaranteed.</li>
+      <li><b>Ownership —</b> on full payment, the website, its content and all account logins (domain, email, Google Business Profile, Analytics) belong to the firm.</li>
+      <li><b>Changes —</b> pages or features beyond the scope above will be quoted separately before any work starts.</li>
+      <li><b>Validity —</b> this quotation is valid for 30 days, until 08 November 2026.</li>
+    </ol>
+  </div>
+
+  <footer class="foot"><span><b>JTACS</b> &nbsp;·&nbsp; Quotation for Ogha Legal</span><span>JTACS/Q/2026-27/001 &nbsp;·&nbsp; Page 2 of 4</span></footer>
+</section>
+
+<!-- =========================== PAGE 3 · business email =========================== -->
+<section class="page">
+  <div class="mini">
+    <div class="brand"><div class="mark">J</div><div class="wm">JTACS</div></div>
+    <div class="ref">Quotation JTACS/Q/2026-27/001<br>Ogha Legal · 09 October 2026</div>
+  </div>
+  <div class="mini-rule"></div>
+
+  <div class="inner">
+    <div class="sec"><span class="num">05</span><h2>Business email on your domain</h2><span class="rule"></span></div>
+    <p class="lead">Email IDs like <b style="color:var(--ink)">name@yourfirm.com</b>. <b>JTACS charges nothing for email</b> — we set it up free. The firm pays only the provider's published price (MRP), billed directly by Google, Microsoft or GoDaddy. All prices below are <b style="color:var(--ink)">per email ID</b> and <b style="color:var(--ink)">include 18% GST</b>.</p>
+
+    <table class="email">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Billing</th>
+          <th>Price<br>excl. GST</th>
+          <th>GST<br>18%</th>
+          <th class="hl">Per ID / month<br>incl. GST</th>
+          <th>Per ID / year<br>incl. GST</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="6"><span class="gname">Google Workspace</span><span class="gsub">Gmail on your domain · billed by Google</span></td></tr>
+        <tr><td>Base</td><td>Annual plan</td><td>₹99.00</td><td>₹17.82</td><td class="hl">₹116.82</td><td class="yr">₹1,401.84</td></tr>
+        <tr class="muted-row"><td>Base</td><td>Monthly (flexible)</td><td>₹120.00</td><td>₹21.60</td><td class="hl">₹141.60</td><td class="yr">₹1,699.20</td></tr>
+        <tr><td>Starter</td><td>Annual plan</td><td>₹270.00</td><td>₹48.60</td><td class="hl">₹318.60</td><td class="yr">₹3,823.20</td></tr>
+        <tr class="muted-row"><td>Starter</td><td>Monthly (flexible)</td><td>₹325.00</td><td>₹58.50</td><td class="hl">₹383.50</td><td class="yr">₹4,602.00</td></tr>
+        <tr class="feat"><td colspan="6"><b>Base</b> — Gmail, Calendar, Meet (100 people), Drive &amp; Docs · 20 GB pooled storage · India-only plan, max 20 users · no Gemini AI. &nbsp;<b>Starter</b> — 30 GB pooled storage per user · Gemini AI included · up to 300 users.</td></tr>
+        <tr class="spacer"><td colspan="6"></td></tr>
+
+        <tr class="grp"><td colspan="6"><span class="gname">Microsoft 365 (Outlook)</span><span class="gsub">Outlook email on your domain · billed by Microsoft</span></td></tr>
+        <tr><td>Business Basic</td><td>Annual plan, paid yearly</td><td>₹170.00</td><td>₹30.60</td><td class="hl">₹200.60</td><td class="yr">₹2,407.20</td></tr>
+        <tr class="muted-row"><td>Business Basic</td><td>Monthly plan</td><td>₹204.00</td><td>₹36.72</td><td class="hl">₹240.72</td><td class="yr">₹2,888.64</td></tr>
+        <tr class="feat"><td colspan="6"><b>Business Basic</b> — 50 GB Outlook mailbox · 1 TB OneDrive · Microsoft Teams · Word, Excel &amp; PowerPoint on web and mobile (desktop Office apps not included).</td></tr>
+        <tr class="spacer"><td colspan="6"></td></tr>
+
+        <tr class="grp"><td colspan="6"><span class="gname">GoDaddy Professional Email</span><span class="gsub">Email only · billed by GoDaddy · 12 months paid upfront</span></td></tr>
+        <tr><td>Pro Light</td><td>1st year (offer)</td><td>₹39.00</td><td>₹7.02</td><td class="hl">₹46.02</td><td class="yr">₹552.24</td></tr>
+        <tr class="muted-row"><td>Pro Light</td><td>Renewal, year 2 onwards</td><td>₹79.00</td><td>₹14.22</td><td class="hl">₹93.22</td><td class="yr">₹1,118.64</td></tr>
+        <tr><td>Pro Plus</td><td>1st year (offer)</td><td>₹89.00</td><td>₹16.02</td><td class="hl">₹105.02</td><td class="yr">₹1,260.24</td></tr>
+        <tr class="muted-row"><td>Pro Plus</td><td>Renewal, year 2 onwards</td><td>₹149.00</td><td>₹26.82</td><td class="hl">₹175.82</td><td class="yr">₹2,109.84</td></tr>
+        <tr class="feat"><td colspan="6"><b>Pro Light</b> — 10 GB mailbox, webmail + phone &amp; desktop apps. &nbsp;<b>Pro Plus</b> — larger mailbox and extra productivity tools. First-year prices are introductory; renewals are charged at the regular price shown.</td></tr>
+      </tbody>
+    </table>
+    <p class="footnote">Prices are the providers' published India list prices as on 09 October 2026; GST at 18% is added by the provider on its invoice (GST-registered firms can claim input tax credit by adding their GSTIN). Providers may revise prices — the provider's invoice will prevail. Monthly figures for GoDaddy are the yearly charge ÷ 12.</p>
+
+    <div class="suggest">
+      <div class="k">Our<br>suggestion</div>
+      <div class="v"><b>Google Workspace</b> — <b>Base</b> (₹116.82 per ID / month) is the lowest-cost option from a major provider for up to 20 IDs; choose <b>Starter</b> if the firm wants more storage and Gemini AI. Prefer Outlook? <b>Microsoft 365 Business Basic</b> (₹200.60) gives the largest mailbox for the price. GoDaddy email is cheapest in year 1 but roughly doubles on renewal and is email-only.</div>
+    </div>
+  </div>
+
+  <footer class="foot"><span><b>JTACS</b> &nbsp;·&nbsp; Quotation for Ogha Legal</span><span>JTACS/Q/2026-27/001 &nbsp;·&nbsp; Page 3 of 4</span></footer>
+</section>
+
+<!-- =========================== PAGE 4 · domain + email setup, acceptance =========================== -->
+<section class="page">
+  <div class="mini">
+    <div class="brand"><div class="mark">J</div><div class="wm">JTACS</div></div>
+    <div class="ref">Quotation JTACS/Q/2026-27/001<br>Ogha Legal · 09 October 2026</div>
+  </div>
+  <div class="mini-rule"></div>
+
+  <div class="inner">
+    <div class="sec"><span class="num">06</span><h2>Domain on GoDaddy + email on Google Workspace</h2><span class="rule"></span></div>
+    <p class="lead" style="margin-top:-1.5mm">Yes — this is a common, recommended setup. The domain stays with GoDaddy; only the email runs on Google.</p>
+    <div class="flow">
+      <div class="step">
+        <div class="dot">1</div>
+        <h4>Buy the domain</h4>
+        <div class="who">GoDaddy</div>
+        <p>Register e.g. yourfirm.com. Buy the domain only — skip GoDaddy's email add-ons at checkout.</p>
+      </div>
+      <div class="step">
+        <div class="dot">2</div>
+        <h4>Start Google Workspace</h4>
+        <div class="who">Google</div>
+        <p>Sign up with the same domain and choose the number of email IDs and the plan.</p>
+      </div>
+      <div class="step">
+        <div class="dot">3</div>
+        <h4>Connect the two</h4>
+        <div class="who">JTACS · free</div>
+        <p>We add Google's records in GoDaddy DNS — verification, MX, SPF, DKIM &amp; DMARC — so mail is delivered and stays out of spam.</p>
+      </div>
+      <div class="step last">
+        <div class="dot">4</div>
+        <h4>Email is live</h4>
+        <div class="who">Same day</div>
+        <p>Sign in at gmail.com as name@yourfirm.com — on web, Android &amp; iPhone. Website and email work independently.</p>
+      </div>
+    </div>
+    <div class="bills">
+      <div class="bill"><div class="bk">Bill 1 · GoDaddy</div><div class="bv">Domain registration</div><div class="bs">Paid yearly, at GoDaddy's price</div></div>
+      <div class="bill"><div class="bk">Bill 2 · Google</div><div class="bv">Email IDs (per user)</div><div class="bs">Monthly or annual, as chosen above</div></div>
+      <div class="bill"><div class="bk">JTACS</div><div class="bv">Setup &amp; DNS configuration</div><div class="bs">No charge</div></div>
+    </div>
+
+    <div class="sec" style="margin-top:9mm"><span class="num">07</span><h2>Acceptance</h2><span class="rule"></span></div>
+    <div class="accept">
+      <div class="sig">
+        <div class="sk">For</div>
+        <div class="sn">JTACS</div>
+        <div class="lines">
+          <div class="ln">Authorised signatory</div>
+          <div class="ln">Date</div>
+        </div>
+      </div>
+      <div class="sig">
+        <div class="sk">Accepted by</div>
+        <div class="sn">Ogha Legal</div>
+        <div class="choice"><span><span class="box"></span>Package A — ₹18,000</span><span><span class="box"></span>Package B — ₹26,000</span></div>
+        <div class="lines" style="margin-top:9mm">
+          <div class="ln">Name, signature &amp; seal</div>
+          <div class="ln">Date</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="thanks">
+      <div class="tt">Thank you for considering JTACS.</div>
+      <div class="ts">We look forward to building Ogha Legal's online presence.</div>
+    </div>
+  </div>
+
+  <footer class="foot"><span><b>JTACS</b> &nbsp;·&nbsp; Quotation for Ogha Legal</span><span>JTACS/Q/2026-27/001 &nbsp;·&nbsp; Page 4 of 4</span></footer>
+</section>
+
+</body>
+</html>
